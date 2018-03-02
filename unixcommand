@@ -1,0 +1,66 @@
+#! /usr/bin/env python3
+
+import sys, json
+
+def main():
+
+    command_dict = {}
+
+    with open('/etc/glossary.json') as f:
+        command_dict = json.loads(f.read())
+
+    if len(sys.argv) == 4 and sys.argv[1] == '-a':
+        command_dict = add_command(command_dict, sys.argv[2], sys.argv[3])
+    
+    if len(sys.argv) == 3 and sys.argv[1] == '-r':
+        try:
+            index = int(sys.argv[2])
+        except ValueError:
+            print("Beep boop can't compute! > Please use command index")
+            return
+        command_dict = remove_command(command_dict, index)
+
+    if len(sys.argv) == 2:
+        command_dict = search_command(command_dict, sys.argv[1])
+        
+    print_result(command_dict)
+
+
+def add_command(command_dict, new_comm, new_disc):
+    command_dict[new_comm] = new_disc
+    override_glossary(command_dict)
+    return command_dict
+
+def remove_command(command_dict, index):
+    i = 1
+    for comm, disc in sorted(command_dict.items(), key=lambda tup: tup[0] ):
+        if i == index:
+            command_dict.pop(comm)
+            override_glossary(command_dict)
+            break
+        i += 1
+
+    return command_dict
+
+
+
+def search_command(command_dict, query):
+    query = query.lower()
+    filtered_dict = {c:d for c, d in command_dict.items() if query in c.lower() or query in d.lower()}
+    return filtered_dict
+
+
+def override_glossary(command_dict):
+    with open('/etc/glossary.json', 'w') as f:
+        json.dump(command_dict, f, indent=4, sort_keys=True)
+   
+def print_result(command_dict):
+    i = 1
+    for comm, disc in sorted(command_dict.items(), key=lambda tup: tup[0] ):
+        print('[' + str(i) + '] ', end='')
+        print('{0:20s} \t|\t {1}'.format(comm, disc))
+        i += 1
+
+
+if __name__ == '__main__':
+    main()
