@@ -7,7 +7,10 @@ def main():
     command_dict = {}
 
     with open('/etc/glossary.json') as f:
-        command_dict = json.loads(f.read())
+        try:
+            command_dict = json.loads(f.read())
+        except:
+            command_dict = {}
 
     if len(sys.argv) == 4 and sys.argv[1] == '-a':
         command_dict = add_command(command_dict, sys.argv[2], sys.argv[3])
