@@ -5,9 +5,13 @@ sudo chmod +x /usr/local/bin/unixcommand
 
 touch /etc/glossary.json
 
+mkdir -p /usr/local/share/man/man1
 cp ./unixcommand.1 /usr/local/share/man/man1/
 sudo mandb
 
-echo 'Install completed'
-echo 'Execute `man unixcommand` for documentation'
-echo 'You may delete this directory'
+echo ''
+echo '#####################################'
+echo '#####     Install completed     #####'
+echo '#####################################'
+echo '> Execute `man unixcommand` for documentation'
+echo '> You may delete this directory'
