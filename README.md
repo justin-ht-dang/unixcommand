@@ -15,7 +15,13 @@ Here's a simple documentation to help you get started:
 ```bash
 unixcommand
 ```
-Note that the commands are displayed lexicographically instead of chronologically.
+*Note that the commands are displayed lexicographically instead of chronologically.*
+
+### To search commands:
+```
+unixcommand [search_term]
+```
+*Note that the search term must be a single word!*
 
 ### To add command:
 
