@@ -6,7 +6,7 @@ def main():
 
     command_dict = {}
 
-    with open('/etc/glossary.json') as f:
+    with open('/etc/unixcommand.json') as f:
         try:
             command_dict = json.loads(f.read())
         except:
@@ -54,7 +54,7 @@ def search_command(command_dict, query):
 
 
 def override_glossary(command_dict):
-    with open('/etc/glossary.json', 'w') as f:
+    with open('/etc/unixcommand.json', 'w') as f:
         json.dump(command_dict, f, indent=4, sort_keys=True)
    
 def print_result(command_dict):
